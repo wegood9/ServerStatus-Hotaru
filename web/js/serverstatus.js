@@ -102,7 +102,7 @@ function uptime() {
 
 		for (var i = 0; i < result.servers.length; i++) {
           
-          //----kaishi
+          //----Start
           
           // Network
 				var newnetstr = "";
@@ -124,7 +124,7 @@ function uptime() {
           
           
           
-          //----jieshu
+          //----End
           
           
           
@@ -183,8 +183,17 @@ function uptime() {
 			//	TableRow.children["online6"].children[0].children[0].innerHTML = "<small>关闭</small>";
 			//}
 
-			// Name
-			TableRow.children["name"].innerHTML = result.servers[i].name;
+			// Name & Custom link
+			if (result.servers[i].link) {
+				var mylink=document.createElement("a");
+				mylink.setAttribute("href",result.servers[i].link)
+				mylink.setAttribute("target","_blank")
+				mylink.innerText = result.servers[i].name;
+				TableRow.children["name"].innerHTML = "";
+				TableRow.children["name"].appendChild(mylink);
+			} else {
+				TableRow.children["name"].innerHTML = result.servers[i].name;
+			}
 
 			// Type
 			TableRow.children["type"].innerHTML = result.servers[i].type;

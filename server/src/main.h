@@ -37,6 +37,7 @@ class CMain
 		char m_aLocation[128];
 		char m_aRegion[128];
 		char m_aPassword[128];
+		char m_aLink[128];
 
 		int64 m_TimeConnected;
 		int64 m_LastUpdate;

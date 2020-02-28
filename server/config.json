@@ -8,7 +8,8 @@
 			"host": "No",
 			"location": "America",
 			"disabled": false,
-			"region":"US"
+			"region": "US",
+			"link": ""
 		},
 		{
 			"username": "bs01",
@@ -18,7 +19,8 @@
 			"host": "No",
 			"location": "Japan",
 			"disabled": false,
-			"region":"JP"
+			"region": "JP",
+			"link": ""
 		}
 	]
 }
