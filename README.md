@@ -21,7 +21,7 @@ Test v0.014：图片来源：Pixiv：72725286
 完成后最好手动检查服务端配置文件
 
 ```
-wget https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/status.sh
+wget https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/status.sh
 bash status.sh s
 ```
 具体请参见：https://www.cokemine.com/serverstatus-hotaru.html

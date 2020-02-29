@@ -5,7 +5,7 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: ServerStatus client + server
-#	Version: Test v0.004
+#	Version: Test v0.005
 #	Author: Toyo,Modify by CokeMine & pathC
 #=================================================
 
@@ -206,7 +206,7 @@ Write_server_config(){
    "type": "KVM",
    "host": "",
    "location": "Hong Kong",
-   "disabled": false,
+   "disabled": "false",
    "region": "HK",
    "link": ""
   }
@@ -475,7 +475,7 @@ Add_ServerStatus_server(){
 	sed -i '3i\  },' ${server_conf}
 	sed -i '3i\   "link": "'"${link_s}"'"' ${server_conf}
 	sed -i '3i\   "region": "'"${region_s}"'"' ${server_conf}
-	sed -i '3i\   "disabled": false ,' ${server_conf}
+	sed -i '3i\   "disabled": "'"${disabled_s}"'",' ${server_conf}
 	sed -i '3i\   "location": "'"${location_s}"'",' ${server_conf}
 	sed -i '3i\   "host": "'"None"'",' ${server_conf}
 	sed -i '3i\   "type": "'"${type_s}"'",' ${server_conf}
