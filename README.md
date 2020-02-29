@@ -99,8 +99,9 @@ $ vi ServerStatus-Hotaru/service/server_status_server_debian
 ![](https://i.loli.net/2019/02/07/5c5bca12df8b0.png)
 
 
-## 效果演示
+## 效果演示(原版本）
 
+此版本节点名可定义为对应的自定义链接，请自行脑补
 ![](https://i.loli.net/2019/04/05/5ca74fb05338f.png)
 
 ![](https://i.loli.net/2019/04/05/5ca74fc86db96.png)
