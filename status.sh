@@ -6,7 +6,7 @@ export PATH
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: ServerStatus client + server
 #	Version: Test v0.004
-#	Author: Toyo,Modify by CokeMine
+#	Author: Toyo,Modify by CokeMine & pathC
 #=================================================
 
 sh_ver="0.0.1"
@@ -64,7 +64,7 @@ check_pid_client(){
 }
 Download_Server_Status_server(){
 	cd "/tmp"
-	wget -N --no-check-certificate "https://github.com/CokeMine/ServerStatus-Hotaru/archive/master.zip"
+	wget -N --no-check-certificate "https://github.com/wegood9/ServerStatus-Hotaru/archive/master.zip"
 	[[ ! -e "master.zip" ]] && echo -e "${Error} ServerStatus 服务端下载失败 !" && exit 1
 	unzip master.zip
 	rm -rf master.zip
@@ -99,7 +99,7 @@ Download_Server_Status_server(){
 }
 Download_Server_Status_client(){
 	cd "/tmp"
-	wget -N --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/clients/status-client.py"
+	wget -N --no-check-certificate "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/clients/status-client.py"
 	[[ ! -e "status-client.py" ]] && echo -e "${Error} ServerStatus 客户端下载失败 !" && exit 1
 	cd "${file_1}"
 	[[ ! -e "${file}" ]] && mkdir "${file}"
@@ -126,14 +126,14 @@ Download_Server_Status_client(){
 }
 Service_Server_Status_server(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_server_centos" -O /etc/init.d/status-server; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/service/server_status_server_centos" -O /etc/init.d/status-server; then
 			echo -e "${Error} ServerStatus 服务端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-server
 		chkconfig --add status-server
 		chkconfig status-server on
 	else
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_server_debian" -O /etc/init.d/status-server; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/service/server_status_server_debian" -O /etc/init.d/status-server; then
 			echo -e "${Error} ServerStatus 服务端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-server
@@ -143,14 +143,14 @@ Service_Server_Status_server(){
 }
 Service_Server_Status_client(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_client_centos" -O /etc/init.d/status-client; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/service/server_status_client_centos" -O /etc/init.d/status-client; then
 			echo -e "${Error} ServerStatus 客户端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-client
 		chkconfig --add status-client
 		chkconfig status-client on
 	else
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_client_debian" -O /etc/init.d/status-client; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/service/server_status_client_debian" -O /etc/init.d/status-client; then
 			echo -e "${Error} ServerStatus 客户端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-client
@@ -207,7 +207,8 @@ Write_server_config(){
    "host": "",
    "location": "Hong Kong",
    "disabled": false,
-   "region": "HK"
+   "region": "HK",
+   "link": ""
   }
  ]
 }
@@ -363,6 +364,14 @@ Set_region(){
 	echo -e "	节点位置[region]: ${Red_background_prefix} ${region_s} ${Font_color_suffix}"
 	echo "	================================================" && echo
 }
+Set_link(){
+	echo -e "请输入 ServerStatus 服务端要设置的自定义链接[link]（用于测速、Looking Glass等）"
+	read -e -p "(默认: 无):" link_s
+	[[ -z "$link_s" ]] && link_s=""
+	echo && echo "	================================================"
+	echo -e "	自定义链接[link]: ${Red_background_prefix} ${link_s} ${Font_color_suffix}"
+	echo "	================================================" && echo
+}
 Set_config_server(){
 	Set_username "server"
 	Set_password "server"
@@ -370,6 +379,7 @@ Set_config_server(){
 	Set_type
 	Set_location
 	Set_region
+	Set_link
 }
 Set_config_client(){
 	Set_server "client"
@@ -390,11 +400,12 @@ Set_ServerStatus_server(){
  ${Green_font_prefix} 6.${Font_color_suffix} 修改 节点配置 - 节点虚拟化
  ${Green_font_prefix} 7.${Font_color_suffix} 修改 节点配置 - 节点位置
  ${Green_font_prefix} 8.${Font_color_suffix} 修改 节点配置 - 节点区域
- ${Green_font_prefix} 9.${Font_color_suffix} 修改 节点配置 - 全部参数
+ ${Green_font_prefix} 9.${Font_color_suffix} 修改 节点配置 - 节点自定义链接
+ ${Green_font_prefix} 10.${Font_color_suffix} 修改 节点配置 - 全部参数
 ————————
- ${Green_font_prefix} 10.${Font_color_suffix} 启用/禁用 节点配置
+ ${Green_font_prefix} 11.${Font_color_suffix} 启用/禁用 节点配置
 ————————
- ${Green_font_prefix}11.${Font_color_suffix} 修改 服务端监听端口" && echo
+ ${Green_font_prefix}12.${Font_color_suffix} 修改 服务端监听端口" && echo
 	read -e -p "(默认: 取消):" server_num
 	[[ -z "${server_num}" ]] && echo "已取消..." && exit 1
 	if [[ ${server_num} == "1" ]]; then
@@ -414,17 +425,19 @@ Set_ServerStatus_server(){
 	elif [[ ${server_num} == "8" ]]; then
 		Modify_ServerStatus_server_region
 	elif [[ ${server_num} == "9" ]]; then
-		Modify_ServerStatus_server_all
+		Modify_ServerStatus_server_link
 	elif [[ ${server_num} == "10" ]]; then
-		Modify_ServerStatus_server_disabled
+		Modify_ServerStatus_server_all
 	elif [[ ${server_num} == "11" ]]; then
+		Modify_ServerStatus_server_disabled
+	elif [[ ${server_num} == "12" ]]; then
 		Read_config_server
 		Del_iptables "${server_port}"
 		Set_server_port
 		Write_server_config_conf
 		Add_iptables "${server_port_s}"
 	else
-		echo -e "${Error} 请输入正确的数字[1-11]" && exit 1
+		echo -e "${Error} 请输入正确的数字[1-12]" && exit 1
 	fi
 	Restart_ServerStatus_server
 }
@@ -443,13 +456,14 @@ List_ServerStatus_server(){
 		now_text_type=$(echo -e "${now_text}"|grep "type"|awk -F ": " '{print $2}')
 		now_text_location=$(echo -e "${now_text}"|grep "location"|awk -F ": " '{print $2}')
 		now_text_region=$(echo -e "${now_text}"|grep "region"|awk -F ": " '{print $2}')
+		now_text_link=$(echo -e "${now_text}"|grep "link"|awk -F ": " '{print $2}')
 		now_text_disabled=$(echo -e "${now_text}"|grep "disabled"|awk -F ": " '{print $2}')
 		if [[ ${now_text_disabled} == "false" ]]; then
 			now_text_disabled_status="${Green_font_prefix}启用${Font_color_suffix}"
 		else
 			now_text_disabled_status="${Red_font_prefix}禁用${Font_color_suffix}"
 		fi
-		conf_list_all=${conf_list_all}"用户名: ${Green_font_prefix}"${now_text_username}"${Font_color_suffix} 密码: ${Green_font_prefix}"${now_text_password}"${Font_color_suffix} 节点名: ${Green_font_prefix}"${now_text_name}"${Font_color_suffix} 类型: ${Green_font_prefix}"${now_text_type}"${Font_color_suffix} 位置: ${Green_font_prefix}"${now_text_location}"${Font_color_suffix} 区域: ${Green_font_prefix}"${now_text_region}"${Font_color_suffix} 状态: ${Green_font_prefix}"${now_text_disabled_status}"${Font_color_suffix}\n"
+		conf_list_all=${conf_list_all}"用户名: ${Green_font_prefix}"${now_text_username}"${Font_color_suffix} 密码: ${Green_font_prefix}"${now_text_password}"${Font_color_suffix} 节点名: ${Green_font_prefix}"${now_text_name}"${Font_color_suffix} 类型: ${Green_font_prefix}"${now_text_type}"${Font_color_suffix} 位置: ${Green_font_prefix}"${now_text_location}"${Font_color_suffix} 区域: ${Green_font_prefix}"${now_text_region}"${Font_color_suffix} 链接: ${Green_font_prefix}"${now_text_link}"${Font_color_suffix} 状态: ${Green_font_prefix}"${now_text_disabled_status}"${Font_color_suffix}\n"
 	done
 	echo && echo -e "节点总数 ${Green_font_prefix}"${conf_text_total}"${Font_color_suffix}"
 	echo -e ${conf_list_all}
@@ -459,6 +473,7 @@ Add_ServerStatus_server(){
 	Set_username_ch=$(cat ${server_conf}|grep '"username": "'"${username_s}"'"')
 	[[ ! -z "${Set_username_ch}" ]] && echo -e "${Error} 用户名已被使用 !" && exit 1
 	sed -i '3i\  },' ${server_conf}
+	sed -i '3i\   "link": "'"${link_s}"'"' ${server_conf}
 	sed -i '3i\   "region": "'"${region_s}"'"' ${server_conf}
 	sed -i '3i\   "disabled": false ,' ${server_conf}
 	sed -i '3i\   "location": "'"${location_s}"'",' ${server_conf}
@@ -588,6 +603,22 @@ Modify_ServerStatus_server_region(){
 		echo -e "${Error} 请输入正确的节点用户名 !" && exit 1
 	fi
 }
+Modify_ServerStatus_server_link(){
+	List_ServerStatus_server
+	echo -e "请输入要修改的节点用户名"
+	read -e -p "(默认: 取消):" manually_username
+	[[ -z "${manually_username}" ]] && echo -e "已取消..." && exit 1
+	Set_username_num=$(cat -n ${server_conf}|grep '"username": "'"${manually_username}"'"'|awk '{print $1}')
+	if [[ ! -z ${Set_username_num} ]]; then
+		Set_link
+		Set_link_num_a=$(echo $((${Set_username_num}+8)))
+		Set_link_num_a_text=$(sed -n "${Set_link_num_a}p" ${server_conf}|sed 's/\"//g;s/,$//g'|awk -F ": " '{print $2}')
+		sed -i "${Set_link_num_a}"'s/"link": "'"${Set_link_num_a_text}"'"/"link": "'"${link_s}"'"/g' ${server_conf}
+		echo -e "${Info} 修改成功 [ 原节点区域: ${Set_link_num_a_text}, 新节点区域: ${link_s} ]"
+	else
+		echo -e "${Error} 请输入正确的节点用户名 !" && exit 1
+	fi
+}
 Modify_ServerStatus_server_all(){
 	List_ServerStatus_server
 	echo -e "请输入要修改的节点用户名"
@@ -601,6 +632,7 @@ Modify_ServerStatus_server_all(){
 		Set_type
 		Set_location
 		Set_region
+		Set_link
 		sed -i "${Set_username_num}"'s/"username": "'"${manually_username}"'"/"username": "'"${username_s}"'"/g' ${server_conf}
 		Set_password_num_a=$(echo $((${Set_username_num}+1)))
 		Set_password_num_text=$(sed -n "${Set_password_num_a}p" ${server_conf}|sed 's/\"//g;s/,$//g'|awk -F ": " '{print $2}')
@@ -615,8 +647,11 @@ Modify_ServerStatus_server_all(){
 		Set_location_num_a_text=$(sed -n "${Set_location_num_a}p" ${server_conf}|sed 's/\"//g;s/,$//g'|awk -F ": " '{print $2}')
 		sed -i "${Set_location_num_a}"'s/"location": "'"${Set_location_num_a_text}"'"/"location": "'"${location_s}"'"/g' ${server_conf}
 		Set_region_num_a=$(echo $((${Set_username_num}+7)))
-		Set_region_num_a_text=$(sed -n "${Set_lregion_num_a}p" ${server_conf}|sed 's/\"//g;s/,$//g'|awk -F ": " '{print $2}')
+		Set_region_num_a_text=$(sed -n "${Set_region_num_a}p" ${server_conf}|sed 's/\"//g;s/,$//g'|awk -F ": " '{print $2}')
 		sed -i "${Set_region_num_a}"'s/"region": "'"${Set_region_num_a_text}"'"/"region": "'"${region_s}"'"/g' ${server_conf}
+		Set_link_num_a=$(echo $((${Set_username_num}+8)))
+		Set_link_num_a_text=$(sed -n "${Set_link_num_a}p" ${server_conf}|sed 's/\"//g;s/,$//g'|awk -F ": " '{print $2}')
+		sed -i "${Set_link_num_a}"'s/"link": "'"${Set_link_num_a_text}"'"/"link": "'"${link_s}"'"/g' ${server_conf}
 		echo -e "${Info} 修改成功。"
 	else
 		echo -e "${Error} 请输入正确的节点用户名 !" && exit 1
@@ -680,7 +715,7 @@ Install_caddy(){
 		Set_server "server"
 		Set_server_http_port
 		if [[ ! -e "/usr/local/caddy/caddy" ]]; then
-			wget -N --no-check-certificate https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/caddy/caddy_install.sh
+			wget -N --no-check-certificate https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/caddy/caddy_install.sh
 			chmod +x caddy_install.sh
 			bash caddy_install.sh install
 			rm -rf caddy_install.sh
@@ -844,7 +879,7 @@ Uninstall_ServerStatus_server(){
 		rm -rf "/etc/init.d/status-server"
 		if [[ -e "/etc/init.d/caddy" ]]; then
 			/etc/init.d/caddy stop
-			wget -N --no-check-certificate https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/caddy/caddy_install.sh
+			wget -N --no-check-certificate https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/caddy/caddy_install.sh
 			chmod +x caddy_install.sh
 			bash caddy_install.sh uninstall
 			rm -rf caddy_install.sh
@@ -966,7 +1001,7 @@ Set_iptables(){
 	fi
 }
 Update_Shell(){
-	sh_new_ver=$(wget --no-check-certificate -qO- -t1 -T3 "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/status.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1) && sh_new_type="github"
+	sh_new_ver=$(wget --no-check-certificate -qO- -t1 -T3 "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/status.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1) && sh_new_type="github"
 	[[ -z ${sh_new_ver} ]] && echo -e "${Error} 无法链接到 Github !" && exit 0
 	if [[ -e "/etc/init.d/status-client" ]]; then
 		rm -rf /etc/init.d/status-client
@@ -976,13 +1011,13 @@ Update_Shell(){
 		rm -rf /etc/init.d/status-server
 		Service_Server_Status_server
 	fi
-	wget -N --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/status.sh" && chmod +x status.sh
+	wget -N --no-check-certificate "https://raw.githubusercontent.com/wegood9/ServerStatus-Hotaru/master/status.sh" && chmod +x status.sh
 	echo -e "脚本已更新为最新版本[ ${sh_new_ver} ] !(注意：因为更新方式为直接覆盖当前运行的脚本，所以可能下面会提示一些报错，无视即可)" && exit 0
 }
 menu_client(){
 echo && echo -e "  ServerStatus 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
   -- Toyo | doub.io/shell-jc3 --
-  --    Modify by CokeMine    --
+  --    Modify by CokeMine & pathC    --
  ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
  ————————————
  ${Green_font_prefix} 1.${Font_color_suffix} 安装 客户端

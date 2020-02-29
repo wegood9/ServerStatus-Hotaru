@@ -11,6 +11,8 @@ Test v0.014：图片来源：Pixiv：72725286
 
 稍作修改。
 
+加入每个服务器的自定义链接，以便快速跳转到该服务器（测速、Looking Glass等用途）。
+
 多了个Region调用国旗。所以用原来Toyo版的需要稍作修改
 
 ## 安装方法
@@ -19,11 +21,10 @@ Test v0.014：图片来源：Pixiv：72725286
 
 ## 修改方法
 
-配置文件：/usr/local/ServerStatus/server/config.json备份并自行添加Region
+配置文件：/usr/local/ServerStatus/server/config.json备份并自行添加Region、Speedtest
 
 ![](https://i.loli.net/2019/02/07/5c5bca12df8b0.png)
 
-卸载ServerStatus-Toyo安装ServerStatus-Hotaru替换配置文件，重启ServerStatus
 
 ## 效果演示
 
